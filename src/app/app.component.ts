@@ -12,7 +12,7 @@ import {
 export class AppComponent {
   generatedPassword: string;
   shuffledPassword: string;
-  shuffleInterval: NodeJS.Timeout;
+  shuffleInterval: number;
   isChecked = false;
   options: GenerationOptions = {
     length: 20,
@@ -44,9 +44,9 @@ export class AppComponent {
       clearInterval(this.shuffleInterval);
     }
 
-    this.shuffleInterval = setInterval(() => {
+    this.shuffleInterval = window.setInterval(() => {
       if (charIndex > this.generatedPassword.length) {
-        clearInterval(this.shuffleInterval)
+        window.clearInterval(this.shuffleInterval)
         return
       }
 
