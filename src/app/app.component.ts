@@ -45,6 +45,12 @@ export class AppComponent {
   generatePassword() {
     this.generatedPassword = this.passwordGenerator.getRandomPassword(this.options);
     let charIndex = 0;
+    const generationOptions: GenerationOptions = {
+      ...this.options,
+      alphabets: { ...this.options.alphabets }
+    }
+
+    console.log('generationOptions', generationOptions);
 
     if (this.shuffleInterval) {
       clearInterval(this.shuffleInterval);
@@ -61,7 +67,7 @@ export class AppComponent {
         .map((empty, i) =>
           i < charIndex
             ? this.generatedPassword[i]
-            : this.passwordGenerator.getRandomChar(this.options.alphabets || {}),
+            : this.passwordGenerator.getRandomChar(generationOptions.alphabets || {}),
         )
         .join('')
 
