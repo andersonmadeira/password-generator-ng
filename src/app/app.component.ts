@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { PasswordGeneratorService, GenerationOptions } from './services/password-generator.service';
+import {
+  PasswordGeneratorService,
+  GenerationOptions
+} from './services/password-generator.service';
 
 @Component({
   selector: 'app-root',
@@ -9,29 +11,25 @@ import { PasswordGeneratorService, GenerationOptions } from './services/password
 })
 export class AppComponent {
   generatedPassword: string;
+  shuffledPassword: string;
+  shuffleInterval: NodeJS.Timeout;
   isChecked = false;
-  form: FormGroup;
   options: GenerationOptions = {
     length: 20,
-    alphabets: {}
+    alphabets: {},
+    animation: true
   }
 
   constructor(
-    private formBuilder: FormBuilder,
     private passwordGenerator: PasswordGeneratorService,
-  ) {
-    this.form = this.formBuilder.group({
-      lowercase: false,
-      uppercase: false,
-      numbers: false,
-      symbols: false,
-      animation: true,
-    })
+  ) { }
+
+  onOptionAlphabetChange(checked: boolean, alphabetName: string): void {
+    this.options.alphabets[alphabetName] = checked;
   }
 
-  onAlphabetOptionChange(checked: boolean, alphabetName: string): void {
-    this.options.alphabets[alphabetName] = checked;
-    console.log(this.options);
+  onOptionChange(checked: boolean, optionName: string): void {
+    this.options[optionName] = checked;
   }
 
   onLengthChange(selectedLength: number): void {
@@ -40,5 +38,29 @@ export class AppComponent {
 
   generatePassword() {
     this.generatedPassword = this.passwordGenerator.getRandomPassword(this.options);
+    let charIndex = 0;
+
+    if (this.shuffleInterval) {
+      clearInterval(this.shuffleInterval);
+    }
+
+    this.shuffleInterval = setInterval(() => {
+      if (charIndex > this.generatedPassword.length) {
+        clearInterval(this.shuffleInterval)
+        return
+      }
+
+      const newSuffleValue = [...new Array(this.generatedPassword.length)]
+        .map((empty, i) =>
+          i < charIndex
+            ? this.generatedPassword[i]
+            : this.passwordGenerator.getRandomChar(this.options.alphabets || {}),
+        )
+        .join('')
+
+      this.shuffledPassword = newSuffleValue;
+
+      charIndex++
+    }, 30)
   }
 }

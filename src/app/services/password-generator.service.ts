@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 
 export interface AlphabetOptions {
-  lowercase?: boolean
-  uppercase?: boolean
-  numbers?: boolean
-  symbols?: boolean
+  lowercase?: boolean;
+  uppercase?: boolean;
+  numbers?: boolean;
+  symbols?: boolean;
 }
 
 export interface GenerationOptions {
-  length: number
-  alphabets: AlphabetOptions
+  length: number;
+  animation: boolean;
+  alphabets: AlphabetOptions;
 }
 
 @Injectable({
@@ -25,7 +26,7 @@ export class PasswordGeneratorService {
 
   }
 
-  getRandomPassword(options: GenerationOptions = { length: 5, alphabets: {} }, ): string {
+  getRandomPassword(options: GenerationOptions = { length: 5, animation: true, alphabets: {} }, ): string {
     const alphabet =
       (options.alphabets.lowercase ? this.ALPHABET_LOWERCASE : '') +
       (options.alphabets.uppercase ? this.ALPHABET_UPPERCASE : '') +

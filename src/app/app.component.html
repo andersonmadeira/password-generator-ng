@@ -10,21 +10,28 @@
     <app-slider (onChange)="onLengthChange($event)"></app-slider>
     <h2>Characters:</h2>
     <div class="input-group">
-      <app-checkbox [label]="'Lowercase (a-z)'" (onChange)="onAlphabetOptionChange($event, 'lowercase')">
+      <app-checkbox [label]="'Lowercase (a-z)'" (onChange)="onOptionAlphabetChange($event, 'lowercase')">
       </app-checkbox>
     </div>
     <div class="input-group">
-      <app-checkbox [label]="'Uppercase (A-Z)'" (onChange)="onAlphabetOptionChange($event, 'uppercase')"></app-checkbox>
+      <app-checkbox [label]="'Uppercase (A-Z)'" (onChange)="onOptionAlphabetChange($event, 'uppercase')"></app-checkbox>
     </div>
     <div class="input-group">
-      <app-checkbox [label]="'Numbers (0-9)'" (onChange)="onAlphabetOptionChange($event, 'numbers')"></app-checkbox>
+      <app-checkbox [label]="'Numbers (0-9)'" (onChange)="onOptionAlphabetChange($event, 'numbers')"></app-checkbox>
     </div>
     <div class="input-group">
-      <app-checkbox [label]="'Symbols (*!@%_#)'" (onChange)="onAlphabetOptionChange($event, 'symbols')"></app-checkbox>
+      <app-checkbox [label]="'Symbols (*!@%_#)'" (onChange)="onOptionAlphabetChange($event, 'symbols')"></app-checkbox>
+    </div>
+    <h2>Options</h2>
+    <div class="input-group">
+      <app-checkbox [checked]="true" [label]="'Animation'" (onChange)="onOptionChange($event, 'animation')">
+      </app-checkbox>
     </div>
     <button class="button" (click)="generatePassword()">Generate</button>
     <div *ngIf="generatedPassword" class="card">
-      {{ generatedPassword }}
+      {{ options.animation && shuffledPassword
+        ? shuffledPassword
+        : generatedPassword ? generatedPassword : null }}
     </div>
   </div>
 </main>
