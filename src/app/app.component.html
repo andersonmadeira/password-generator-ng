@@ -7,7 +7,7 @@
       &nbsp; Password Generator
     </h1>
     <h2>Length: {{ options.length }} </h2>
-    <app-slider (onChange)="onLengthChange($event)"></app-slider>
+    <app-slider [max]="255" (onChange)="onLengthChange($event)"></app-slider>
     <h2>Characters:</h2>
     <div class="input-group">
       <app-checkbox [label]="'Lowercase (a-z)'" (onChange)="onOptionAlphabetChange($event, 'lowercase')">

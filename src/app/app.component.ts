@@ -12,7 +12,7 @@ import {
 export class AppComponent {
   generatedPassword: string;
   shuffledPassword: string;
-  shuffleInterval: number;
+  shuffleInterval: number = 0;
   isChecked = false;
   options: GenerationOptions = {
     length: 20,
@@ -30,6 +30,12 @@ export class AppComponent {
 
   onOptionChange(checked: boolean, optionName: string): void {
     this.options[optionName] = checked;
+
+    if (checked && optionName.toLocaleLowerCase() === 'animation'
+      && this.shuffleInterval !== 0) {
+      window.clearInterval(this.shuffleInterval);
+      this.shuffledPassword = undefined;
+    }
   }
 
   onLengthChange(selectedLength: number): void {
@@ -47,6 +53,7 @@ export class AppComponent {
     this.shuffleInterval = window.setInterval(() => {
       if (charIndex > this.generatedPassword.length) {
         window.clearInterval(this.shuffleInterval)
+        this.shuffleInterval = 0;
         return
       }
 
