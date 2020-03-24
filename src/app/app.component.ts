@@ -43,6 +43,14 @@ export class AppComponent {
   }
 
   generatePassword() {
+    if (!this.options.alphabets.lowercase &&
+      !this.options.alphabets.uppercase &&
+      !this.options.alphabets.numbers &&
+      !this.options.alphabets.symbols) {
+      alert('Please select at least one alphabet option!');
+      return;
+    }
+
     this.generatedPassword = this.passwordGenerator.getRandomPassword(this.options);
     let charIndex = 0;
     const generationOptions: GenerationOptions = {
