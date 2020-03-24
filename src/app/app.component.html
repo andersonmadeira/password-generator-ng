@@ -29,6 +29,7 @@
     </div>
     <button class="button" (click)="generatePassword()">Generate</button>
     <div *ngIf="generatedPassword" class="card">
+      <app-copy-button [text]="generatedPassword"></app-copy-button>
       {{ options.animation && shuffledPassword
         ? shuffledPassword
         : generatedPassword ? generatedPassword : null }}
